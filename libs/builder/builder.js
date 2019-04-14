@@ -1296,6 +1296,27 @@ Vvveb.Builder = {
          return this.removeHelpers(html, keepHelperAttributes);
 	},
 	
+		getHtml2: function() 
+	{
+		var doc = window.FrameDocument;
+		var hasDoctpe = (doc.doctype !== null);
+		var html = "";
+		
+		if (hasDoctpe) html =
+		"<!DOCTYPE "
+         + doc.doctype.name
+         + (doc.doctype.publicId ? ' PUBLIC "' + doc.doctype.publicId + '"' : '')
+         + (!doc.doctype.publicId && doc.doctype.systemId ? ' SYSTEM' : '') 
+         + (doc.doctype.systemId ? ' "' + doc.doctype.systemId + '"' : '')
+         + ">\n";
+          
+         //html +=  doc.documentElement.innerHTML + "\n</html>";
+		// html =  doc.getElementsByTagName("BODY")[0].pathname ;
+		  html =  window.FrameDocument ;
+         
+         return html;
+	},
+	
 	setHtml: function(html) 
 	{
 		//update only body to avoid breaking iframe css/js relative paths
@@ -1332,7 +1353,7 @@ Vvveb.Builder = {
 
 		$.ajax({
 			type: "POST",
-			url: 'save.php',//set your server side save script url
+			url: 'saveajax.php',//set your server side save script url
 			data: data,
 			cache: false,
 			success: function (data) {
@@ -1451,6 +1472,42 @@ Vvveb.Gui = {
 		});		
 	},
 	
+    savePhp: function(fileName, startTemplateUrl, callback) 
+	{	
+	   var newFileName = $('#filenames').val();
+	    
+		var data = {};
+		
+		data["fileName"] = (fileName && fileName != "") ? fileName : Vvveb.FileManager.getCurrentUrl();
+		data["startTemplateUrl"] = startTemplateUrl;
+		if (!startTemplateUrl || startTemplateUrl == null)
+		{
+		samma = Vvveb.Builder.getHtml2();
+		data["html"] = samma['documentElement']['innerHTML'];
+		data["fileName"] = newFileName;//Vvveb.FileManager.getCurrentUrl();
+		}
+
+		for(var i in samma['location']['pathname']){
+
+}
+		//save;
+		$.ajax({
+			type: "POST",
+			url: 'save2system.php',//set your server side save script url
+			data: data,
+			success: function (data) {
+				//console.log("File saved at: ", data);
+				
+				$('#message-modal').modal().find(".modal-body").html("File saved at: " + data);
+                $('input[name=filenames]').val("");;
+				//Vvveb.FileManager.reloadCurrentPage(); //optional uncomment to reload after save
+			},
+			error: function (data) {
+				alert(data.responseText);
+			}
+		});			
+	},
+	
 	download : function () {
 		filename = /[^\/]+$/.exec(Vvveb.Builder.iframe.src)[0];
 		uriContent = "data:application/octet-stream,"  + encodeURIComponent(Vvveb.Builder.getHtml());
@@ -1567,18 +1624,44 @@ Vvveb.Gui = {
 				fileName = fileName.replace(/[^A-Za-z0-9\.\/]+/g, '-').toLowerCase();
 			
 			//add your server url/prefix/path if needed
-			var url = "" + fileName;
+			var url = "demo/custom/" + fileName;
 			
 
 			Vvveb.FileManager.addPage(name, title, url);
 			event.preventDefault();
-
+            alert(url);
+			//var newName = "demo/custom/" + name;
+			
 			return Vvveb.Builder.saveAjax(url, startTemplateUrl, function (data) {
 					Vvveb.FileManager.loadPage(name);
 					Vvveb.FileManager.scrollBottom();
 					newPageModal.modal("hide");
 			});
 		});
+		
+	},
+	
+	//New templates, file/components tree 
+	newTemplate : function () {
+		
+		var newTemplateModal = $('#new-template-modal');
+		
+		newTemplateModal.modal("show").find("form").off("submit").submit(function( event ) {
+			$.ajax({
+            url: 'uploadTemplate.php',  
+            type: 'POST',
+            data: new FormData($('#templatefile')[0]),
+            success:function(data){
+                $('#output').html(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false 
+        });
+    });
+			
+			return "Done!";
+	
 		
 	},
 	
