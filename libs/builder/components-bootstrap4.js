@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-https://github.com/givan/Vvvebjs
+https://github.com/givanz/Vvvebjs
 */
 
 bgcolorClasses = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-light", "bg-dark", "bg-white"]
@@ -69,10 +69,11 @@ function changeNodeName(node, newNodeName)
 }
 
 Vvveb.ComponentsGroup['Bootstrap 4'] =
-["html/container", "html/gridrow", "html/button", "html/buttongroup", "html/buttontoolbar", "html/heading", "html/image", "html/jumbotron", "html/alert", "html/card", "html/listgroup", "html/hr", "html/taglabel", "html/badge", "html/progress", "html/navbar", "html/breadcrumbs", "html/pagination", "html/form", "html/textinput", "html/textareainput", "html/selectinput", "html/fileinput", "html/checkbox", "html/radiobutton", "html/table", ];
+["html/container", "html/gridrow", "html/button", "html/buttongroup", "html/buttontoolbar", "html/heading", "html/image", "html/jumbotron", "html/alert", "html/card", "html/listgroup", "html/hr", "html/taglabel", "html/badge", "html/progress", "html/navbar", "html/breadcrumbs", "html/pagination", "html/form", "html/textinput", "html/textareainput", "html/selectinput", "html/fileinput", "html/checkbox", "html/radiobutton", "html/table", "html/paragraph", "html/link"];
 
 
 var base_sort = 100;//start sorting for base component from 100 to allow extended properties to be first
+var style_section = 'style';
 
 Vvveb.Components.add("_base", {
     name: "Element",
@@ -110,12 +111,14 @@ Vvveb.Components.extend("_base", "_base", {
         inputtype: SectionInput,
         name:false,
         sort: base_sort++,
+		section: style_section,
         data: {header:"Display"},
     }, {
         name: "Display",
         key: "display",
         htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: SelectInput,
@@ -140,6 +143,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "position",
         htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: SelectInput,
@@ -164,6 +168,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "top",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         parent:"",
@@ -173,6 +178,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "left",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         parent:"",
@@ -182,6 +188,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "bottom",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         parent:"",
@@ -191,6 +198,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "right",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         parent:"",
@@ -200,6 +208,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "float",
         htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:12,
         inline:true,
         inputtype: RadioButtonInput,
@@ -230,6 +239,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "opacity",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:12,
 		inline:true,
         parent:"",
@@ -243,6 +253,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Background Color",
         key: "background-color",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
 		htmlAttr: "style",
@@ -251,6 +262,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Text Color",
         key: "color",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
 		htmlAttr: "style",
@@ -266,12 +278,14 @@ Vvveb.Components.extend("_base", "_base", {
 		inputtype: SectionInput,
 		name:false,
 		sort: base_sort++,
+		section: style_section,
 		data: {header:"Typography"},
     }, {
         name: "Font family",
         key: "font-family",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: SelectInput,
@@ -325,6 +339,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "font-weight",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: SelectInput,
@@ -366,6 +381,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "text-align",
         htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:12,
         inline:true,
         inputtype: RadioButtonInput,
@@ -408,6 +424,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "line-height",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -416,6 +433,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "letter-spacing",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -424,6 +442,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "text-decoration-line",
         htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:12,
         inline:true,
         inputtype: RadioButtonInput,
@@ -465,6 +484,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Decoration Color",
         key: "text-decoration-color",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
 		htmlAttr: "style",
@@ -474,6 +494,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "text-decoration-style",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: SelectInput,
@@ -508,12 +529,14 @@ Vvveb.Components.extend("_base", "_base", {
 		inputtype: SectionInput,
 		name:false,
 		sort: base_sort++,
+		section: style_section,
 		data: {header:"Size", expanded:false},
 	}, {
         name: "Width",
         key: "width",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -522,6 +545,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "height",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -530,6 +554,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "min-width",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -538,6 +563,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "min-height",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -546,6 +572,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "max-width",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -554,6 +581,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "max-height",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -567,12 +595,14 @@ Vvveb.Components.extend("_base", "_base", {
 		inputtype: SectionInput,
 		name:false,
 		sort: base_sort++,
+		section: style_section,
 		data: {header:"Margin", expanded:false},
 	}, {
         name: "Top",
         key: "margin-top",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -581,6 +611,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "margin-right",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -589,14 +620,16 @@ Vvveb.Components.extend("_base", "_base", {
         key: "margin-bottom",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
     }, {
         name: "Left",
-        key: "margin-Left",
+        key: "margin-left",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -610,12 +643,14 @@ Vvveb.Components.extend("_base", "_base", {
 		inputtype: SectionInput,
 		name:false,
 		sort: base_sort++,
+		section: style_section,
 		data: {header:"Padding", expanded:false},
 	}, {
         name: "Top",
         key: "padding-top",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -624,6 +659,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "padding-right",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -632,14 +668,16 @@ Vvveb.Components.extend("_base", "_base", {
         key: "padding-bottom",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
     }, {
         name: "Left",
-        key: "padding-Left",
+        key: "padding-left",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -654,12 +692,14 @@ Vvveb.Components.extend("_base", "_base", {
 		inputtype: SectionInput,
 		name:false,
 		sort: base_sort++,
+		section: style_section,
 		data: {header:"Border", expanded:false},
 	 }, {        
         name: "Style",
         key: "border-style",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:12,
 		inline:true,
         inputtype: SelectInput,
@@ -683,6 +723,7 @@ Vvveb.Components.extend("_base", "_base", {
         key: "border-width",
 		htmlAttr: "style",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
         inputtype: CssUnitInput
@@ -690,6 +731,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Color",
         key: "border-color",
         sort: base_sort++,
+		section: style_section,
         col:6,
 		inline:true,
 		htmlAttr: "style",
@@ -704,13 +746,21 @@ Vvveb.Components.extend("_base", "_base", {
 		inputtype: SectionInput,
 		name:false,
 		sort: base_sort++,
+		section: style_section,
 		data: {header:"Background Image", expanded:false},
 	 },{
         name: "Image",
         key: "Image",
         sort: base_sort++,
+		section: style_section,
 		//htmlAttr: "style",
         inputtype: ImageInput,
+        
+        init: function(node) {
+			var image = $(node).css("background-image").replace(/^url\(['"]?(.+)['"]?\)/, '$1');
+			return image;
+        },
+
 		onChange: function(node, value) {
 			
 			$(node).css('background-image', 'url(' + value + ')');
@@ -722,6 +772,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Repeat",
         key: "background-repeat",
         sort: base_sort++,
+		section: style_section,
 		htmlAttr: "style",
         inputtype: SelectInput,
         data: {
@@ -743,6 +794,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Size",
         key: "background-size",
         sort: base_sort++,
+		section: style_section,
 		htmlAttr: "style",
         inputtype: SelectInput,
         data: {
@@ -761,6 +813,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Position x",
         key: "background-position-x",
         sort: base_sort++,
+		section: style_section,
 		htmlAttr: "style",
         col:6,
 		inline:true,
@@ -784,6 +837,7 @@ Vvveb.Components.extend("_base", "_base", {
         name: "Position y",
         key: "background-position-y",
         sort: base_sort++,
+		section: style_section,
 		htmlAttr: "style",
         col:6,
 		inline:true,
@@ -809,7 +863,7 @@ Vvveb.Components.extend("_base", "_base", {
 Vvveb.Components.extend("_base", "html/container", {
     classes: ["container", "container-fluid"],
     image: "icons/container.svg",
-    html: '<div class="container"><div class="m-5">Container</div></div>',
+    html: '<div class="container" style="min-height:150px;"><div class="m-5">Container</div></div>',
     name: "Container",
     properties: [
      {
@@ -861,8 +915,7 @@ Vvveb.Components.extend("_base", "html/heading", {
 	properties: [
 	{
         name: "Size",
-        key: "id",
-        htmlAttr: "id",
+        key: "size",
         inputtype: SelectInput,
         
         onChange: function(node, value) {
@@ -905,6 +958,7 @@ Vvveb.Components.extend("_base", "html/heading", {
 Vvveb.Components.extend("_base", "html/link", {
     nodes: ["a"],
     name: "Link",
+    html: '<a href="#" class="d-inline-block"><span>Link</span></a>',
 	image: "icons/link.svg",
     properties: [{
         name: "Url",
@@ -1639,7 +1693,7 @@ Vvveb.Components.extend("_base", "html/selectinput", {
         name: "",
         key: "addChild",
         inputtype: ButtonInput,
-        data: {text:"Add option"},
+        data: {text:"Add option", icon:"la-plus"},
         onChange: function(node)
         {
 			 $(node).append('<option value="value">Text</option>');
@@ -1950,7 +2004,7 @@ Vvveb.Components.add("html/gridcolumn", {
 		},
 		
 		onChange: function(node, value, input) {
-			_class = node.attr("class");
+			var _class = node.attr("class");
 			
 			//remove previous breakpoint column size
 			_class = _class.replace(new RegExp(input.name + '-\\d+?'), '');
@@ -1979,7 +2033,7 @@ Vvveb.Components.add("html/gridrow", {
 			
 			var reg = /col-([^-\$ ]*)?-?(\d+)/g; 
 			var match;
-			data = {};
+			var data = {};
 
 			while ((match = reg.exec(_class)) != null) {
 				data["col" + ((match[1] != undefined)?"_" + match[1]:"")] = match[2];
@@ -1991,13 +2045,14 @@ Vvveb.Components.add("html/gridrow", {
 				key: "column" + i,
 				//index: i - 1,
 				columnNode: this,
+				col:12,
 				inline:true,
 				inputtype: GridInput,
 				data: data,
 				onChange: function(node, value, input) {
 
 					//column = $('[class*="col-"]:eq(' + this.index + ')', node);
-					column = $(this.columnNode);
+					var column = $(this.columnNode);
 					
 					//if remove button is clicked remove column and render row properties
 					if (input.nodeName == 'BUTTON')
@@ -2049,7 +2104,7 @@ Vvveb.Components.add("html/gridrow", {
         name: "",
         key: "addChild",
         inputtype: ButtonInput,
-        data: {text:"Add column"},
+        data: {text:"Add column", icon:"la la-plus"},
         onChange: function(node)
         {
 			 $(node).append('<div class="col-3">Col-3</div>');
@@ -2059,5 +2114,49 @@ Vvveb.Components.add("html/gridrow", {
 			 
 			 return node;
 		}
+	}]
+});
+
+
+Vvveb.Components.extend("_base", "html/paragraph", {
+    nodes: ["p"],
+    name: "Paragraph",
+	image: "icons/paragraph.svg",
+	html: '<p>Lorem ipsum</p>',
+    properties: [{
+        name: "Text align",
+        key: "text-align",
+        htmlAttr: "class",
+        inputtype: SelectInput,
+        validValues: ["", "text-left", "text-center", "text-right"],
+        inputtype: RadioButtonInput,
+        data: {
+			extraclass:"btn-group-sm btn-group-fullwidth",
+            options: [{
+                value: "",
+                icon:"la la-close",
+                //text: "None",
+                title: "None",
+                checked:true,
+            }, {
+                value: "left",
+                //text: "Left",
+                title: "text-left",
+                icon:"la la-align-left",
+                checked:false,
+            }, {
+                value: "text-center",
+                //text: "Center",
+                title: "Center",
+                icon:"la la-align-center",
+                checked:false,
+            }, {
+                value: "text-right",
+                //text: "Right",
+                title: "Right",
+                icon:"la la-align-right",
+                checked:false,
+            }],
+        },
 	}]
 });

@@ -59,7 +59,7 @@ var Input = {
 var TextInput = $.extend({}, Input, {
 
     events: [
-        ["keyup", "onChange", "input"],
+        ["blur", "onChange", "input"],
 	 ],
 	
 	init: function(data) {
@@ -147,15 +147,21 @@ var CssUnitInput = $.extend({}, Input, {
 
 	number:0,
 	unit:"px",
+
+    events: [
+        ["change", "onChange", "select"],
+        ["change keyup mouseup", "onChange", "input"],
+	 ],
 		
 	onChange: function(event) {
 		
 		if (event.data && event.data.element)
 		{
 			input = event.data.input;
-			input[this.name] = this.value;// this.name = unit or number	
+			if (this.value != "") input[this.name] = this.value;// this.name = unit or number	
+			if (input['unit'] == "") input['unit'] = "px";//if unit is not set use default px
 			
-			value = "";	
+			var value = "";	
 			if (input.unit == "auto")  
 			{
 				$(event.data.element).addClass("auto"); 
@@ -171,11 +177,6 @@ var CssUnitInput = $.extend({}, Input, {
 		}
 	},
 	
-    events: [
-        ["change", "onChange", "select"],
-        ["change", "onChange", "input"],
-	 ],
-
 	setValue: function(value) {
 		this.number = parseInt(value);
 		this.unit = value.replace(this.number, '');
@@ -225,7 +226,7 @@ var ColorInput = $.extend({}, Input, {
 var ImageInput = $.extend({}, Input, {
 
     events: [
-        ["keyup", "onChange", "input[type=text]"],
+        ["blur", "onChange", "input[type=text]"],
         ["change", "onUpload", "input[type=file]"],
 	 ],
 
@@ -254,14 +255,14 @@ var ImageInput = $.extend({}, Input, {
 				
 				event.data.element.trigger('propertyChange', [image, this]);
 				
-				return;//remove this line to enable php upload
+				//return;//remove this line to enable php upload
 
 				var formData = new FormData();
 				formData.append("file", file);
     
 				$.ajax({
 					type: "POST",
-					url: '/upload.php',//set your server side upload script url
+					url: 'upload.php',//set your server side upload script url
 					data: formData,
 					processData: false,
 					contentType: false,
@@ -290,7 +291,7 @@ var ImageInput = $.extend({}, Input, {
 var FileUploadInput = $.extend({}, TextInput, {
 
     events: [
-        ["keyup", "onChange", "input"],
+        ["blur", "onChange", "input"],
 	 ],
 
 	init: function(data) {
@@ -331,7 +332,7 @@ var RadioButtonInput = $.extend({}, RadioInput, {
 	setValue: function(value) {
 		$('input', this.element).removeAttr('checked');
 		$('btn', this.element).removeClass('active');
-		if (value)
+		if (value && value != "")
 		{
 			$("input[value=" + value + "]", this.element).attr("checked", "true").prop('checked', true).parent().button("toggle");
 		}
@@ -365,7 +366,7 @@ var ToggleInput = $.extend({}, TextInput, {
 var ValueTextInput = $.extend({}, TextInput, {
 
     events: [
-        ["keyup", "onChange", "input"],
+        ["blur", "onChange", "input"],
 	 ],
 	
 	init: function(data) {
@@ -377,7 +378,7 @@ var ValueTextInput = $.extend({}, TextInput, {
 var GridLayoutInput = $.extend({}, TextInput, {
 
     events: [
-        ["keyup", "onChange", "input"],
+        ["blur", "onChange", "input"],
 	 ],
 	
 	init: function(data) {
@@ -389,7 +390,7 @@ var GridLayoutInput = $.extend({}, TextInput, {
 var ProductsInput = $.extend({}, TextInput, {
 
     events: [
-        ["keyup", "onChange", "input"],
+        ["blur", "onChange", "input"],
 	 ],
 	
 	init: function(data) {
@@ -423,7 +424,7 @@ var TextValueInput = $.extend({}, Input, {
 	
 
     events: [
-        ["keyup", "onChange", "input"],
+        ["blur", "onChange", "input"],
 	    ["click", "onChange", "button" /*'select'*/],
 	 ],
 	
