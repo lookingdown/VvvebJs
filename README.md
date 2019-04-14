@@ -10,6 +10,10 @@ Add ?version to bootstrap css file to force refresh with the change..
 Add different php save types..  (form)
 Add example of php block..
 
+Theme html files should reference bootsrap css as such
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+
 Built with jQuery and Bootstrap 4.
 
 [Two panel Live Demo](http://www.vvveb.com/vvvebjs/editor.html)
