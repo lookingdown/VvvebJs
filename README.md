@@ -2,7 +2,7 @@
 
 
 ## Drag and drop website builder javascript library.
-## WORK IN PROGRESS Fork with bootstrap 4.3.1, bootswatch themes, addition/upload of new templates from interface, creation of php file of edited files with php includes for head header footer and scripts includes for integration in PHP projects stores page data (filenname status(draft) username date or others)..  Work in progress , works for me though..
+## WORK IN PROGRESS Fork with bootstrap 4.3.1, bootswatch themes, addition/upload of new templates from interface, creation of php file of edited files with php includes for head header footer and scripts includes for integration in PHP projects stores page data (filenname status(draft) username date or others).. to Database with pdo, Work in progress , works for me though..
 
 Todo...
 Validate existence of php before saving with option to overwrite, currently only Upserts...
