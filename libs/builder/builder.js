@@ -1508,6 +1508,72 @@ Vvveb.Gui = {
 		});			
 	},
 	
+	newTheme : function () {
+		
+	var newThemeModal = $('#new-theme-modal');
+		
+		//$('#submit').click(function() {
+		newThemeModal.modal("show").find("#themeSubmit").click(function()  { 
+	
+			$.ajax({
+            url: 'uploadTheme.php',  
+            type: 'POST',
+            data: new FormData($('#themefile')[0]),
+            success:function(data){
+				newThemeModal.modal("hide");
+				setTimeout(function(){  
+				$('#message-modal').modal().find(".modal-body").html("New Theme : <b>" + data + "</b> Created");
+				}, 700);
+            },
+			error: function (data) {
+				alert(data.responseText);
+			},
+            cache: false,
+            contentType: false,
+            processData: false 
+        });
+			
+    });
+		return 'Done!';
+	},
+		
+	//New templates, file/components tree 
+	newTemplate : function () {
+		
+		var newTemplateModal = $('#new-template-modal');
+		
+		newTemplateModal.modal("show").find("#templateSubmit").click(function()  {
+			templateForm = new FormData($('#templatefile')[0]);
+			//replace whitespace with _ and remove illegal chars
+			templateName = templateForm.get('name').replace(/[\W_]+/g,"_");
+			templateForm.set('name', templateName);
+			var url = "demo/templates/" + templateName;
+			$.ajax({
+            url: 'uploadTemplate.php',  
+            type: 'POST',
+            data: templateForm,
+            success:function(data){
+				//Vvveb.FileManager.loadPage(templateName);
+				Vvveb.FileManager.scrollBottom();
+                newTemplateModal.modal("hide");
+				setTimeout(function(){  
+				$('#message-modal').modal().find(".modal-body").html("New Template : <b>" + data + "</b> Created");
+				}, 700);
+            },
+			error: function (data) {
+				alert(data.responseText);
+			},
+            cache: false,
+            contentType: false,
+            processData: false 
+        });
+		 
+		 return 'Done!'
+    });		
+		
+	},
+	
+	
 	download : function () {
 		filename = /[^\/]+$/.exec(Vvveb.Builder.iframe.src)[0];
 		uriContent = "data:application/octet-stream,"  + encodeURIComponent(Vvveb.Builder.getHtml());
@@ -1621,7 +1687,7 @@ Vvveb.Gui = {
 			//replace nonalphanumeric with dashes and lowercase for name
 			var name = title.replace(/\W+/g, '-').toLowerCase();
 				//allow only alphanumeric, dot char for extension (eg .html) and / to allow typing full path including folders
-				fileName = fileName.replace(/[^A-Za-z0-9\.\/]+/g, '-').toLowerCase();
+			fileName = fileName.replace(/[^A-Za-z0-9\.\/]+/g, '-').toLowerCase();
 			
 			//add your server url/prefix/path if needed
 			var url = "demo/custom/" + fileName;
@@ -1640,30 +1706,7 @@ Vvveb.Gui = {
 		});
 		
 	},
-	
-	//New templates, file/components tree 
-	newTemplate : function () {
-		
-		var newTemplateModal = $('#new-template-modal');
-		
-		newTemplateModal.modal("show").find("form").off("submit").submit(function( event ) {
-			$.ajax({
-            url: 'uploadTemplate.php',  
-            type: 'POST',
-            data: new FormData($('#templatefile')[0]),
-            success:function(data){
-                $('#output').html(data);
-            },
-            cache: false,
-            contentType: false,
-            processData: false 
-        });
-    });
-			
-			return "Done!";
-	
-		
-	},
+
 	
 	deletePage : function () {
 		
