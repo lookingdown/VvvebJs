@@ -69,8 +69,13 @@ include 'curtheme.php';
 							
 							?>
 						</select>
+						
 					</div>
-										
+					<div class="btn-group mr-3 float-left" role="group">
+				    <button class="btn btn-light"  title="New Theme" id="theme-btn" data-vvveb-action="newTheme" data-vvveb-shortcut="">
+						  <i class="la la-css3"></i>
+					  </button>	
+                    </div>					  
 					<div class="btn-group mr-3" role="group">
 					  <button class="btn btn-light" title="Undo (Ctrl/Cmd + Z)" id="undo-btn" data-vvveb-action="undo" data-vvveb-shortcut="ctrl+z">
 						  <i class="la la-undo"></i>
@@ -99,7 +104,7 @@ include 'curtheme.php';
 					
 					<div class="btn-group mr-3" role="group">					 
 					
-					<input type="text" class="btn btn-light" title="Without spaces in name" name="filenames" id="filenames" placeholder="Desired Filename here" >
+					<input type="text" class="btn btn-light" title="Without spaces in name" name="filenames" id="filenames" placeholder="Desired PHP Filename" >
 					
 					  <button class="btn btn-light" title="Save file to as PHP and process" id="save-btn" data-vvveb-action="savePhp" >
 						 <i class="la la-check-square-o"></i>
@@ -914,7 +919,7 @@ include 'curtheme.php';
 		</div>
 
 		<div class="form-group row" data-key="href">     
-			 <label class="col-sm-3 control-label">Page name</label>      
+			 <label class="col-sm-3 control-label">Template name</label>      
 			<div class="col-sm-9 input">
 				<div>   
 					<input name="name" type="text" class="form-control" placeholder="Filename" required>  
@@ -923,7 +928,7 @@ include 'curtheme.php';
 		</div>
 		
 		<div class="form-group row" data-key="href">     
-			 <label class="col-sm-3 control-label">File name</label>      
+			 <label class="col-sm-3 control-label">File(html)</label>      
 			<div class="col-sm-9 input">
 				<div>   
 					<input type="file"  name="file"  class="form-control" required/>  
@@ -933,7 +938,65 @@ include 'curtheme.php';
       </div>
      <div id="output"></div>
       <div class="modal-footer">
-        <button class="btn btn-primary btn-lg" type="submit"><i class="la la-check"></i> Upload template</button>
+        <button class="btn btn-primary btn-lg" id="templateSubmit" type="button"><i class="la la-check"></i> Upload template</button>
+        <button class="btn btn-secondary btn-lg" type="reset" data-dismiss="modal"><i class="la la-close"></i> Cancel</button>
+      </div>
+    </div>
+    
+   </form>		
+
+  </div>
+</div>
+
+
+<!-- new theme modal -->
+<div class="modal fade" id="new-theme-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    
+    <form id="themefile">
+		
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title text-primary"><i class="la la-lg la-file"></i> New theme</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><small><i class="la la-close"></i></small></span>
+        </button>
+      </div>
+
+      <div class="modal-body text">
+		<div class="form-group row" data-key="type">      
+			<label class="col-sm-3 control-label">
+				Template 
+				<abbr class="badge badge-pill badge-secondary" title="Upload new HTML templates to Editor">?</abbr> 
+			</label>      
+			<div class="col-sm-9 input">
+				<div>    
+ 
+				</div>
+			</div>     
+		</div>
+
+		<div class="form-group row" data-key="href">     
+			 <label class="col-sm-3 control-label">Theme Name</label>      
+			<div class="col-sm-9 input">
+				<div>   
+					<input name="name" type="text" class="form-control" placeholder="Filename" required>  
+				</div>
+			</div>     
+		</div>
+		
+		<div class="form-group row" data-key="href">     
+			 <label class="col-sm-3 control-label">Bootstrap 4 CSS file</label>      
+			<div class="col-sm-9 input">
+				<div>   
+					<input type="file"  name="file"  class="form-control" required/>  
+				</div>
+			</div>     
+		</div>
+      </div>
+     <div id="output-theme"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-lg" id="themeSubmit" type="button"><i class="la la-check"></i> Upload theme</button>
         <button class="btn btn-secondary btn-lg" type="reset" data-dismiss="modal"><i class="la la-close"></i> Cancel</button>
       </div>
     </div>
@@ -1027,12 +1090,12 @@ $(document).ready(function()
 		{name:"product", title:"Product",  url: "demo/product/index.html", assets: ['demo/product/product.css']},
 		{name:"ecommerce", title:"eCommerce homepage",  url: "ecommerce_demo/index.html"},
 		<?php 
-		   $htmlFiles = glob("demo/custom/*.html");
+		   $htmlFiles = glob("demo/templates/*.html");
 		   foreach ($htmlFiles as $file) { 
 			   if (in_array($file, array('new-page-blank-template.html', 'editor.html'))) continue;//skip template files
 			   $pathInfo = pathinfo($file);
 		?>
-		{name:"<?php echo ucfirst($pathInfo['filename']);?>", title:"<?php echo ucfirst($pathInfo['filename']);?>",  url: "<?php echo "demo/custom/".$pathInfo['basename'];?>"},
+		{name:"<?php echo ucfirst($pathInfo['filename']);?>", title:"<?php echo ucfirst($pathInfo['filename']);?>",  url: "<?php echo "demo/templates/".$pathInfo['basename'];?>"},
 		<?php } ?>
 		{name:"test", title:"test",  url: "http://vvveb_install.givan.ro/"},
 	]);
