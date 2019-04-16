@@ -1474,8 +1474,15 @@ Vvveb.Gui = {
 	
     savePhp: function(fileName, startTemplateUrl, callback) 
 	{	
+       if( $('#filenames').val() == '') {
+           $('#filenames').css('background-color', 'rgb(250, 136, 135)');
+           //$('#message-modal').modal().find(".modal-body").html("Please enter filename!");
+           $('#filenames').focus();
+           return false;
+      }
+       $('#filenames').css('background-color', 'rgb(255, 255, 255)');
 	   var newFileName = $('#filenames').val();
-	    
+
 		var data = {};
 		
 		data["fileName"] = (fileName && fileName != "") ? fileName : Vvveb.FileManager.getCurrentUrl();
@@ -1496,10 +1503,9 @@ Vvveb.Gui = {
 			url: 'save2system.php',//set your server side save script url
 			data: data,
 			success: function (data) {
-				//console.log("File saved at: ", data);
-				
-				$('#message-modal').modal().find(".modal-body").html("File saved at: " + data);
-                $('input[name=filenames]').val("");;
+				//console.log("File saved at: ", data);	
+				$('#message-modal').modal().find(".modal-body").html("File saved as: " + data);
+                $('input[name=filenames]').val("");
 				//Vvveb.FileManager.reloadCurrentPage(); //optional uncomment to reload after save
 			},
 			error: function (data) {
