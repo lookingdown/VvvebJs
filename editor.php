@@ -124,7 +124,6 @@ include 'curtheme.php';
 		 			 <button id="mobile-view" data-view="mobile" class="btn btn-light"  title="Mobile view" data-vvveb-action="viewport">
 						  <i class="la la-mobile-phone"></i>
 					  </button>
-
 					  <button id="tablet-view"  data-view="tablet" class="btn btn-light"  title="Tablet view" data-vvveb-action="viewport">
 						  <i class="la la-tablet"></i>
 					  </button>
@@ -845,7 +844,7 @@ include 'curtheme.php';
 					<select class="form-control custom-select" name="startTemplateUrl"> 
 
                     		<?php 
-		   $htmlTemplates = glob("templates/*.html");
+		   $htmlTemplates = glob("demo/templates/*.html");
 		   foreach ($htmlTemplates as $file) { 
 			   if (in_array($file, array('new-page-blank-template.html', 'editor.html'))) continue;//skip template files
 			   $pathInfo = pathinfo($file);
