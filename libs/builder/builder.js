@@ -1482,6 +1482,7 @@ Vvveb.Gui = {
       }
        $('#filenames').css('background-color', 'rgb(255, 255, 255)');
 	   var newFileName = $('#filenames').val();
+	   var save_as = $('#save_as').val();
 
 		var data = {};
 		
@@ -1489,15 +1490,21 @@ Vvveb.Gui = {
 		data["startTemplateUrl"] = startTemplateUrl;
 		if (!startTemplateUrl || startTemplateUrl == null)
 		{
-		samma = Vvveb.Builder.getHtml2();
-		data["html"] = samma['documentElement']['innerHTML'];
-		data["fileName"] = newFileName;//Vvveb.FileManager.getCurrentUrl();
+		getContent = Vvveb.Builder.getHtml2();
+		data["html"] = getContent['documentElement']['innerHTML'];
+		 if( $('#save_as').val() == '2') {
+		 	//getContent =  Vvveb.Builder.getHtml();//this.getHtml(); //
+		 	data["html"] = Vvveb.Builder.getHtml();
+        }		
+		data["fileName"] = newFileName;
+		data["save_as"] = save_as;
 		}
 
-		for(var i in samma['location']['pathname']){
+		for(var i in getContent['location']['pathname']){
 
 }
-		//save;
+        alert(JSON.stringify(data["save_as"]));
+		//save; 
 		$.ajax({
 			type: "POST",
 			url: 'save2system.php',//set your server side save script url
