@@ -4,7 +4,8 @@ define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
 
 //Save content to database 0 save content in file 1
 
-$content=1;
+// 2 = save whole file with php extention 1 = save as php with header and footer includes and body in DB field 0 = save as php with header and footer includes and body in file..
+if(isset($_POST['save_as']))$content=$_POST['save_as'];
 
 /*
 //uncomment this if you dont have in a separate file and comment include above
@@ -79,18 +80,15 @@ $user_id='13';
 		foreach ($body->childNodes as $child){
 				$bodyContent->appendChild($bodyContent->importNode($child, true));
 			}
-		
-    if($content==8)
-    	{  
-    		$bodyContent->appendChild($after);
-    		$bodyContent->insertBefore($before, $bodyContent->firstChild);
-    		//$fileName = sanitizeFileName($_POST['fileName']);
-    		}
 
     		$searchVal = array("PHPSTART", "PHPSTOP", "<!--?php", "?-->", "DOCTYPE", "HTMLSTART", "BODYSTART", "BODYSTOP", "HTMLSTOP", "EDITABLE_CONTENT");   
+    		//For full html save as is only replace php tags
+    		$searchFullVal = array("<!--?php", "?-->"); 
     		  
     		// Array containing replace string from  search string 
-    		$replaceVal = array("<?php", "?>", "<?php", "?>", "<!DOCTYPE html>", "<html>", "<body>", "</body>", "</html>",""); 
+    		$replaceVal = array("<?php", "?>", "<?php", "?>", "<!DOCTYPE html>", "<html>", "<body>", "</body>", "</html>","");
+    		//For full html save as is only replace php tags
+    		$replaceFullVal = array("<?php", "?>");  
     	
 
 		$theFileName = strtok(preg_replace('/\s+/', '_', $newFileName),  '.').".php";
@@ -100,7 +98,7 @@ $user_id='13';
 			$sqlf = "INSERT INTO pages (name, author_id, date, status) VALUES (?,?,UNIX_TIMESTAMP(),?) ON DUPLICATE KEY UPDATE  author_id= ?, date=UNIX_TIMESTAMP(), status= ? ";
 			$stmt= $pdo->prepare($sqlf);
 			$stmt->execute([$theFileName, $user_id, 'draft', $user_id, 'newcopy']);
-		}else{
+		}elseif($content==0){
 			$content = trim($bodyContent->saveHTML());	
 			$sqlf = "INSERT INTO pages (name, author_id, content1, date, status) VALUES (?,?,?,UNIX_TIMESTAMP(),?) ON DUPLICATE KEY UPDATE  author_id= ?, content1=?, date=UNIX_TIMESTAMP(), status= ? ";
 			$stmt= $pdo->prepare($sqlf);
@@ -119,6 +117,9 @@ $user_id='13';
 	   		$emptyBody->appendChild($after);
 	    	$emptyBody->insertBefore($before, $emptyBody->firstChild);
 	   	if (file_put_contents($theFileName, str_replace($searchVal, $replaceVal, $emptyBody->saveHTML()))) 
+			echo $theFileName;
+	   }elseif($content==2){
+	   	if (file_put_contents($theFileName, str_replace($searchFullVal, $replaceFullVal, $html))) 
 			echo $theFileName;
 	   }
 	else 

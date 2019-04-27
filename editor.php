@@ -105,7 +105,11 @@ include 'curtheme.php';
 					<div class="btn-group mr-3" role="group">					 
 					
 					<input type="text" class="btn btn-light" title="Without spaces in name" name="filenames" id="filenames" placeholder="Desired PHP Filename" >
-					
+					  <select id="save_as" name="save_as">
+					    <option value="1">PHP</option>
+					    <option value="0">Body in DB</option>
+					    <option value="2">As Is</option>
+					  </select>
 					  <button class="btn btn-light" title="Save file to as PHP and process" id="save-btn" data-vvveb-action="savePhp" >
 						 <i class="la la-check-square-o"></i>
 					  </button>
@@ -676,19 +680,6 @@ include 'curtheme.php';
 	
 </script>
 
-<script id="vvveb-input-bootstrap-color-picker-input" type="text/html">
-
- 	<div>
-		<div id="cp2" class="input-group" title="Using input value">
-		  <input name="{%=key%}" type="text" {% if (typeof value !== 'undefined' && value != false) { %} value="{%=value%}" {% } %}	 class="form-control"/>
-		  <span class="input-group-append">
-			<span class="input-group-text colorpicker-input-addon"><i></i></span>
-		  </span>
-		</div>
-	</div>
-
- </script>		
-		
 <script id="vvveb-input-numberinput" type="text/html">
 	<div>
 		<input name="{%=key%}" type="number" value="{%=value%}" 
@@ -1034,12 +1025,7 @@ include 'curtheme.php';
 <script src="libs/builder/undo.js"></script>	
 <!-- inputs-->
 <script src="libs/builder/inputs.js"></script>	
-<!-- bootstrap colorpicker //uncomment bellow scripts to enable -->
-<!--
-<script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-<link href="libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-<script src="libs/builder/plugin-bootstrap-colorpicker.js"></script>
--->	
+
 <!-- components-->
 <script src="libs/builder/components-bootstrap4.js"></script>	
 <script src="libs/builder/components-widgets.js"></script>	
