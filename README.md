@@ -2,6 +2,18 @@
 
 
 ## Drag and drop website builder javascript library.
+## WORK IN PROGRESS Fork with bootstrap 4.3.1, bootswatch themes, addition/upload of new templates from interface, creation of php file of edited files with php includes for head header footer and scripts includes for integration in PHP projects stores page data (filenname status(draft) username date or others).. to Database with pdo, Work in progress , works for me though..
+
+Todo...
+Validate existence of php before saving with option to overwrite, currently only Upserts...
+Add ?version to bootstrap css file to force refresh with the change..
+Add different php save types..  (form)
+Add example of php block..
+
+Theme html files should reference bootsrap css as such
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+
 Built with jQuery and Bootstrap 4.
 
 [Two panel Live Demo](http://www.vvveb.com/vvvebjs/editor.html)

@@ -1296,6 +1296,27 @@ Vvveb.Builder = {
          return this.removeHelpers(html, keepHelperAttributes);
 	},
 	
+		getHtml2: function() 
+	{
+		var doc = window.FrameDocument;
+		var hasDoctpe = (doc.doctype !== null);
+		var html = "";
+		
+		if (hasDoctpe) html =
+		"<!DOCTYPE "
+         + doc.doctype.name
+         + (doc.doctype.publicId ? ' PUBLIC "' + doc.doctype.publicId + '"' : '')
+         + (!doc.doctype.publicId && doc.doctype.systemId ? ' SYSTEM' : '') 
+         + (doc.doctype.systemId ? ' "' + doc.doctype.systemId + '"' : '')
+         + ">\n";
+          
+         //html +=  doc.documentElement.innerHTML + "\n</html>";
+		// html =  doc.getElementsByTagName("BODY")[0].pathname ;
+		  html =  window.FrameDocument ;
+         
+         return html;
+	},
+	
 	setHtml: function(html) 
 	{
 		//update only body to avoid breaking iframe css/js relative paths
@@ -1332,7 +1353,7 @@ Vvveb.Builder = {
 
 		$.ajax({
 			type: "POST",
-			url: 'save.php',//set your server side save script url
+			url: 'saveajax.php',//set your server side save script url
 			data: data,
 			cache: false,
 			success: function (data) {
@@ -1451,6 +1472,121 @@ Vvveb.Gui = {
 		});		
 	},
 	
+    savePhp: function(fileName, startTemplateUrl, callback) 
+	{	
+       if( $('#filenames').val() == '') {
+           $('#filenames').css('background-color', 'rgb(250, 136, 135)');
+           //$('#message-modal').modal().find(".modal-body").html("Please enter filename!");
+           $('#filenames').focus();
+           return false;
+      }
+       $('#filenames').css('background-color', 'rgb(255, 255, 255)');
+	   var newFileName = $('#filenames').val();
+	   var save_as = $('#save_as').val();
+
+		var data = {};
+		
+		data["fileName"] = (fileName && fileName != "") ? fileName : Vvveb.FileManager.getCurrentUrl();
+		data["startTemplateUrl"] = startTemplateUrl;
+		if (!startTemplateUrl || startTemplateUrl == null)
+		{
+		getContent = Vvveb.Builder.getHtml2();
+		data["html"] = getContent['documentElement']['innerHTML'];
+		 if( $('#save_as').val() == '2') {
+		 	//getContent =  Vvveb.Builder.getHtml();//this.getHtml(); //
+		 	data["html"] = Vvveb.Builder.getHtml();
+        }		
+		data["fileName"] = newFileName;
+		data["save_as"] = save_as;
+		}
+
+		for(var i in getContent['location']['pathname']){
+
+}
+        alert(JSON.stringify(data["save_as"]));
+		//save; 
+		$.ajax({
+			type: "POST",
+			url: 'save2system.php',//set your server side save script url
+			data: data,
+			success: function (data) {
+				//console.log("File saved at: ", data);	
+				$('#message-modal').modal().find(".modal-body").html("File saved as: " + data);
+                $('input[name=filenames]').val("");
+				//Vvveb.FileManager.reloadCurrentPage(); //optional uncomment to reload after save
+			},
+			error: function (data) {
+				alert(data.responseText);
+			}
+		});			
+	},
+	
+	newTheme : function () {
+		
+	var newThemeModal = $('#new-theme-modal');
+		
+		//$('#submit').click(function() {
+		newThemeModal.modal("show").find("#themeSubmit").click(function()  { 
+	
+			$.ajax({
+            url: 'uploadTheme.php',  
+            type: 'POST',
+            data: new FormData($('#themefile')[0]),
+            success:function(data){
+				newThemeModal.modal("hide");
+				setTimeout(function(){  
+				$('#message-modal').modal().find(".modal-body").html("New Theme : <b>" + data + "</b> Created");
+				}, 700);
+            },
+			error: function (data) {
+				alert(data.responseText);
+			},
+            cache: false,
+            contentType: false,
+            processData: false 
+        });
+			
+    });
+		return 'Done!';
+	},
+		
+	//New templates, file/components tree 
+	newTemplate : function () {
+		
+		var newTemplateModal = $('#new-template-modal');
+		
+		newTemplateModal.modal("show").find("#templateSubmit").click(function()  {
+			templateForm = new FormData($('#templatefile')[0]);
+			//replace whitespace with _ and remove illegal chars
+			templateName = templateForm.get('name').replace(/[\W_]+/g,"_");
+			templateForm.set('name', templateName);
+			var url = "demo/templates/" + templateName;
+			$.ajax({
+            url: 'uploadTemplate.php',  
+            type: 'POST',
+            data: templateForm,
+            success:function(data){
+				//Vvveb.FileManager.loadPage(templateName);
+				Vvveb.FileManager.scrollBottom();
+                newTemplateModal.modal("hide");
+				setTimeout(function(){  
+				$('#message-modal').modal().find(".modal-body").html("New Template : <b>" + data + "</b> Created");
+				}, 700);
+            },
+			error: function (data) {
+				alert(data.responseText);
+			},
+            cache: false,
+            contentType: false,
+            processData: false 
+        });
+		 
+		 return 'Done!'
+    });		
+		
+	},
+	
+	
 	download : function () {
 		filename = /[^\/]+$/.exec(Vvveb.Builder.iframe.src)[0];
 		uriContent = "data:application/octet-stream,"  + encodeURIComponent(Vvveb.Builder.getHtml());
@@ -1564,15 +1700,17 @@ Vvveb.Gui = {
 			//replace nonalphanumeric with dashes and lowercase for name
 			var name = title.replace(/\W+/g, '-').toLowerCase();
 				//allow only alphanumeric, dot char for extension (eg .html) and / to allow typing full path including folders
-				fileName = fileName.replace(/[^A-Za-z0-9\.\/]+/g, '-').toLowerCase();
+			fileName = fileName.replace(/[^A-Za-z0-9\.\/]+/g, '-').toLowerCase();
 			
 			//add your server url/prefix/path if needed
-			var url = "" + fileName;
+			var url = "demo/custom/" + fileName;
 			
 
 			Vvveb.FileManager.addPage(name, title, url);
 			event.preventDefault();
-
+            alert(url);
+			//var newName = "demo/custom/" + name;
+			
 			return Vvveb.Builder.saveAjax(url, startTemplateUrl, function (data) {
 					Vvveb.FileManager.loadPage(name);
 					Vvveb.FileManager.scrollBottom();
@@ -1581,6 +1719,7 @@ Vvveb.Gui = {
 		});
 		
 	},
+
 	
 	deletePage : function () {
 		

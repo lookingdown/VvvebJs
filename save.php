@@ -20,7 +20,7 @@ if (isset($_POST['startTemplateUrl']) && !empty($_POST['startTemplateUrl']))
 
 $fileName = sanitizeFileName($_POST['fileName']);
 
-if (file_put_contents($fileName, $html)) 
-	echo $fileName;
+if (file_put_contents($_POST['fileName'], $html)) 
+	echo $_POST['fileName'];
 else 
 	echo 'Error saving file '  . $fileName;
